@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::table('attendance_records', function (Blueprint $table) {
+            $table->boolean('attendance_after')->default(false)->after('date');
+            $table->decimal('attendance_factor', 5, 2)->default(0)->after('attendance_after');
+            $table->boolean('submission_before')->default(false)->after('attendance_factor');
+            $table->decimal('submission_factor', 5, 2)->default(0)->after('submission_before');
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('attendance_records', function (Blueprint $table) {
+            $table->dropColumn([
+                'attendance_after',
+                'attendance_factor',
+                'submission_before',
+                'submission_factor'
+            ]);
+        });
+    }
+}; 
